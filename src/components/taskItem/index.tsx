@@ -3,23 +3,41 @@ import * as C from "./style";
 import { IoClose } from "react-icons/io5";
 type props = {
     task: TaskItemType,
+    deleteTask: (id: string) => void,
     changeTaskState: (id: string, value: boolean)=> void
 }
-export const TaskItem = ({task, changeTaskState}: props)=>{
+const TaskItem = ({task, deleteTask, changeTaskState }: props)=>{
     return(
         <C.Container>
-            <div className="left">
+            <C.TableData className="check-box-container">
                 <input 
                     type="checkbox" 
                     onChange={(e)=> changeTaskState(task.id, e.target.checked)} 
                     checked={task.complete} 
                 />
-                <C.Name>{task.name}</C.Name>
-            </div>
-            <div className="right">
-                <C.Priority priority={task.priority}/>
-                <IoClose className="close-icon" size={20}/>
-            </div>
+                <C.CheckBox 
+                    active={task.complete}
+                    onClick={()=> changeTaskState(task.id, !task.complete)} 
+                />
+            </C.TableData>
+            <C.TableData className="left">
+                <C.Name complete={task.complete}>
+                    {task.name}
+                </C.Name>
+            </C.TableData>
+            <C.TableData>
+                <C.PriorityContainer>
+                    <C.Priority priority={task.priority}/>
+                </C.PriorityContainer>
+            </C.TableData>
+            <C.TableData>
+                <IoClose 
+                    className="close-icon" 
+                    size={20}
+                    onClick={() => deleteTask(task.id)}
+                />
+            </C.TableData>
         </C.Container>
     )
 }
+export default TaskItem;

@@ -1,11 +1,10 @@
-import React from 'react';
-import { Task } from './components/task';
-
+import Task from './components/Task';
+import * as C from "./app.style";
 function App() {
   return (
-    <div className="App">
+    <C.App>
       <Task />
-    </div>
+    </C.App>
   );
 }
 

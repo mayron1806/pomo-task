@@ -4,5 +4,6 @@ export type TaskItemType = {
     id: string
     complete: boolean
     name: string,
-    priority: priority
+    priority: priority,
+    description?: string
 }

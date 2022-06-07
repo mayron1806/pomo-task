@@ -7,6 +7,7 @@ const Global = createGlobalStyle`
         border: 0;
         text-decoration: none;
         box-sizing: border-box;
+        outline: none;
     }
     html{
         //cores
@@ -18,12 +19,13 @@ const Global = createGlobalStyle`
         --black: #5A5A5A;
         --purple: #9C44DC;
         --light-purple: #BC8AE1;
-
-        font-family: 'Roboto Mono', monospace;
+        --shadow: rgba(0, 0, 0, 0.3);
+        
         font-size: 62.5%;
     }
     body{
         font-size: 1rem;
+        font-family: 'Roboto Mono', monospace;
     }
 `;
 export default Global;
