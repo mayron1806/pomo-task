@@ -1,5 +1,5 @@
-
 import * as C from "./style";
+
 type props = {
     name: string
     value: number,
@@ -8,7 +8,7 @@ type props = {
 }
 const Block = ({name, value, active, action}: props) => {
     return(
-        <C.Container className={active ? "active" : ""} onClick={() => action ? action() : ()=>{} }>
+        <C.Container className={active ? "active" : ""} onClick={() => action ? action() : () => {} }>
             <C.Title>{name}</C.Title>
             <C.Value>{value}</C.Value>
             <p>tarefas</p>

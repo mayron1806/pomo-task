@@ -1,25 +1,13 @@
 import styled from "styled-components";
 import { priority } from "../../enum/priority";
 
-export const Container = styled.tr`
-    .check-box-container{
-        position: relative;
-        input{
-            opacity: 0;
-            z-index: 10;
-        }
-    }
-`;
 export const CheckBox = styled.div<{active: boolean}>`
-    position: absolute;
     width: 15px;
     height: 15px;
     background-color: ${props => props.active ? "var(--purple)" : "transparent"};
     border-radius: 2px;
     border: 1px solid var(--purple);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    cursor: pointer;
 `;
 export const TableData = styled.td`
     text-align: center;
@@ -34,6 +22,7 @@ export const Name = styled.p<{complete: boolean}>`
     font-size: 1.6rem;
     color: var(--black);
     text-decoration: ${props => props.complete ? "line-through" : "none"};
+    cursor: pointer;
 `;
 
 const priorityStyle = (p: priority) => {
@@ -66,6 +55,7 @@ export const PriorityContainer = styled.div`
     justify-content: center;
 `;
 export const Priority = styled.p<{priority: priority}>`
+    cursor: pointer;
     width: fit-content;
     padding: 0 1rem;
     font-size: 1.6rem;

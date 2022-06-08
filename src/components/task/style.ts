@@ -8,6 +8,7 @@ export const Container = styled.div`
     box-shadow: 0 0 15px var(--shadow);
     padding: 2rem;
 `;
+/* HEADER--------------------------------------------------------------------------------------*/
 export const Header = styled.div`
     display: flex;
     justify-content: space-between;
@@ -19,6 +20,7 @@ export const Title = styled.h2`
     font-size: 2.5rem;
     color: var(--black);
 `;
+/* BLOCK------------------------------------------------------------------------------------------*/
 export const BlocksContainer = styled.div`
     width: 100%;
     display: flex;
@@ -44,7 +46,9 @@ export const Button = styled.button`
         box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.2);
     }
 `;
+/* TABLE------------------------------------------------------------------------------------------*/
 export const TableContainer = styled.div`
+    margin-top: 1rem;
     max-height: calc(100vh - 300px);
     overflow: auto;
     table{

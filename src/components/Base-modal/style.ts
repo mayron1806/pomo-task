@@ -41,3 +41,8 @@ export const Title = styled.h2`
     font-size: 2.5rem;
     color: var(--purple);
 `;
+export const Content = styled.div`
+    padding: 1rem 0;
+    font-size: 2rem;
+    color: var(--black);
+`;

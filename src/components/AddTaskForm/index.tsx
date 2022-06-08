@@ -1,19 +1,35 @@
-import { FormEvent, useState, useRef } from "react";
+import { FormEvent, useState, useRef, useEffect } from "react";
 import { priority as p } from "../../enum/priority";
 import { TaskItemType } from "../../types/taskItemType";
 import * as C from "./style";
-import {v4 as getID} from "uuid";
+import { v4 as getID } from "uuid";
 
 type props = {
-    addTask: (task: TaskItemType) => void
+    addTask: (task: TaskItemType) => void,
+    closeForm: () => void
 }
-const AddTaskForm = ({addTask}: props) => {
+const AddTaskForm = ({addTask, closeForm}: props) => {
     const [name, setName] = useState<string>("");
     const [priority, setPriority] = useState<p>(p.LOW);
     const [description, setDescription] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
+
     const nameInputRef = useRef<HTMLInputElement | null>(null);
 
+    useEffect(()=>{
+        if(name.length > 0){
+            nameInputRef.current?.classList.remove("error");
+            nameInputRef.current?.focus();
+        }
+    }, [name])
+
+    const reset = () => {
+        setName("");
+        setPriority(0);
+        setDescription("");
+        setErrorMessage("");
+    }
+    
     const sendForm = (e: FormEvent) => {
         e.preventDefault();
         // se foi digitado um nome adiciona a tarefa
@@ -26,13 +42,16 @@ const AddTaskForm = ({addTask}: props) => {
                 priority: priority,
                 description: description
             }
+            reset();
             addTask(task);
+            closeForm();
+            return;
         }
         nameInputRef.current?.classList.add("error");
         setErrorMessage("Você precisa peencher o campo nome.");
     }
     return(
-        <C.Container onSubmit={(e)=>sendForm(e)}>
+        <C.Container onSubmit={(e) => sendForm(e)}>
             <C.Label htmlFor="name">Nome da tarefa</C.Label>
             <C.Input
                 ref={nameInputRef} 
@@ -47,6 +66,7 @@ const AddTaskForm = ({addTask}: props) => {
                 <C.Select 
                     name="name" 
                     onChange={e => setPriority(parseInt(e.target.value))}
+                    value={priority}
                     defaultValue={0}
                 >
                     <option value={p.LOW}>Baixa</option>
