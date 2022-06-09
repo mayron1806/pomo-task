@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-export const Form = styled.form`
-    
-`;
 export const Time = styled.div`
     border: 1px solid var(--purple);
     border-radius: 10px;
     display: inline-flex;
     align-items: center;
     overflow:hidden;
+    span{
+        transform:translateY(-2px)
+    }
     
 `;
 export const Input = styled.input.attrs({type:"number"})`

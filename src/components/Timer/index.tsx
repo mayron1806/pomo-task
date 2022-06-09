@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { convertToMinutesFormat } from "../../utils/TimeFormat";
 import Button from "../Button";
 import * as C from "./style";
 enum TimeState{
@@ -18,17 +19,35 @@ const Timer = ({ workTime, breakTime }: props) => {
     useEffect(() => {
         let interval: ReturnType<typeof setTimeout>;
         if(isRunning){
+            if(timeState === TimeState.WORK){
+                document.title = `Trabalho: ${convertToMinutesFormat(currentTime)}`;
+            }
+            if(timeState === TimeState.BREAK){
+                document.title = `Descanso: ${convertToMinutesFormat(currentTime)}`;
+            }
+        
             interval = setTimeout(() => {
                 setCurrentTime(time => time - 1);
             }, 1000);
         }
+        else{
+            document.title = `POMOTASK`;
+        }
         return () => clearInterval(interval); 
     }, [currentTime, isRunning])
+
+    // reset timer
+    useEffect(()=>{
+        setIsRunning(false);
+        if(timeState === TimeState.WORK) setCurrentTime(workTime);
+        else setCurrentTime(breakTime);
+    }, [workTime, breakTime])
 
     // actions
     const pause = () =>  setIsRunning(false);
     const resume = () => setIsRunning(true);
-
+    
+    // muda para tempo de trabalho ou descanso
     const changeTime = () => {
         if(timeState === TimeState.BREAK){
             setCurrentTime(workTime);

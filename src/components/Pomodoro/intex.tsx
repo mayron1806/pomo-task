@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Title from "../Title";
 import Timer from "../Timer";
 import * as C from "./style";
 import {IoSettingsOutline} from "react-icons/io5"
 import Modal from "../Modal";
 import AjustPomodoroTime from "../AjustPomodoroTime";
+import { useLocalState } from "../../hooks/useLocalState";
 const MINUTES_MULTIPLY = 60;
+
 const Pomodoro = () => {
-    const [workTime, setWorkTime] = useState<number>(25 * MINUTES_MULTIPLY);
-    const [breakTime, setBreakTime] = useState<number>(5 * MINUTES_MULTIPLY);
+    const {
+        state: workTime, 
+        setState: setWorkTime
+    } = useLocalState<number>("work-time",25 * MINUTES_MULTIPLY);
+    const {
+        state: breakTime, 
+        setState: setBreakTime
+    } = useLocalState<number>("break-time",5 * MINUTES_MULTIPLY);
+
 
     const [isSettingsActive, setIsSettingsActive] = useState<boolean>(false);
     const enableSettings = () => setIsSettingsActive(true);
@@ -18,7 +27,13 @@ const Pomodoro = () => {
         <>
             <Modal 
                 title="Configurações do pomodoro" 
-                template={<AjustPomodoroTime />}
+                template={
+                    <AjustPomodoroTime 
+                        workTime={{value: workTime, setValue: setWorkTime}}
+                        breakTime={{value: breakTime, setValue: setBreakTime}}
+                        close={desableSettings}
+                    />
+                }
                 disableModal={desableSettings} 
                 isActive={isSettingsActive}
             />
@@ -33,7 +48,6 @@ const Pomodoro = () => {
             <C.TimerContainer>
                 <Timer workTime={workTime} breakTime={breakTime}/>
             </C.TimerContainer>
-            
         </>
     )
 }

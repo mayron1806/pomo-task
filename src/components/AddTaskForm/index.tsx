@@ -3,7 +3,9 @@ import { Priority as p } from "../../enum/priority";
 import { TaskItemType } from "../../types/taskItemType";
 import * as C from "./style";
 import { v4 as getID } from "uuid";
-
+import Label from "../Label/intex";
+import ErrorMessage from "../ErrorMessage";
+import SendButton from "../SendButton";
 type props = {
     addTask: (task: TaskItemType) => void,
     closeForm: () => void
@@ -18,8 +20,8 @@ const AddTaskForm = ({addTask, closeForm}: props) => {
 
     useEffect(()=>{
         if(name.length > 0){
-            nameInputRef.current?.classList.remove("error");
-            nameInputRef.current?.focus();
+          //  nameInputRef.current?.classList.remove("error");
+           // nameInputRef.current?.focus();
         }
     }, [name])
 
@@ -51,30 +53,29 @@ const AddTaskForm = ({addTask, closeForm}: props) => {
         setErrorMessage("Você precisa peencher o campo nome.");
     }
     return(
-        <C.Container onSubmit={(e) => sendForm(e)}>
-            <C.Label htmlFor="name">Nome da tarefa</C.Label>
+        <C.Form onSubmit={(e) => sendForm(e)}>
+            <Label htmlFor="name">Nome da tarefa</Label>
             <C.Input
                 ref={nameInputRef} 
                 type="text" 
                 name="name"
                 placeholder="Ex: Estudar Matemática"
                 value={name}
-                onChange={(e)=> setName(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
             />
             <div className="priority">
-                <C.Label className="inline" htmlFor="priority">Prioridade:</C.Label>
+                <Label className="inline" htmlFor="priority">Prioridade:</Label>
                 <C.Select 
-                    name="name" 
+                    name="priority" 
                     onChange={e => setPriority(parseInt(e.target.value))}
                     value={priority}
-                    defaultValue={0}
                 >
                     <option value={p.LOW}>Baixa</option>
                     <option value={p.MEDIUM}>Média</option>
                     <option value={p.HIGH}>Alta</option>
                 </C.Select>
             </div>
-            <C.Label htmlFor="description">Descrição</C.Label>
+            <Label htmlFor="description">Descrição</Label>
             <C.Text 
                 maxLength={500} 
                 rows={4} 
@@ -83,9 +84,9 @@ const AddTaskForm = ({addTask, closeForm}: props) => {
                 value={description}
                 onChange={(e)=> setDescription(e.target.value)}
             />
-            <C.ErrorMessage>{errorMessage}</C.ErrorMessage>
-            <C.Send type="submit" value="Criar"/>
-        </C.Container>
+            <ErrorMessage>{errorMessage}</ErrorMessage>
+            <SendButton value="Criar"/>
+        </C.Form>
     )
 }
 export default AddTaskForm;
