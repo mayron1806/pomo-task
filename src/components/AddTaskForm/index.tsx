@@ -1,5 +1,5 @@
 import { FormEvent, useState, useRef, useEffect } from "react";
-import { priority as p } from "../../enum/priority";
+import { Priority as p } from "../../enum/priority";
 import { TaskItemType } from "../../types/taskItemType";
 import * as C from "./style";
 import { v4 as getID } from "uuid";

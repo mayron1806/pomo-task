@@ -1,24 +1,12 @@
 import styled from "styled-components";
-
-export const Container = styled.div`
-    width: 400px;
-    height: 100%;
-    background-color: var(--white);
-    border-radius: 3rem;
-    box-shadow: 0 0 15px var(--shadow);
-    padding: 2rem;
-`;
 /* HEADER--------------------------------------------------------------------------------------*/
 export const Header = styled.div`
     display: flex;
     justify-content: space-between;
     .add-task{
         cursor: pointer;
+        color: ${props => props.theme.colors.text_color};
     }
-`;
-export const Title = styled.h2`
-    font-size: 2.5rem;
-    color: var(--black);
 `;
 /* BLOCK------------------------------------------------------------------------------------------*/
 export const BlocksContainer = styled.div`
@@ -68,10 +56,11 @@ export const TableContainer = styled.div`
 `;
 export const TableHead = styled.thead`
     font-size: 2rem;
+    color: ${props => props.theme.colors.text_color};
     th{
         font-weight: 400;
     }
-    th.name{
+    th.left{
         text-align: left;
     }
 `;

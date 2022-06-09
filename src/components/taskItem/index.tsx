@@ -1,20 +1,20 @@
 import { TaskItemType } from "../../types/taskItemType"
 import * as C from "./style";
 import { IoClose } from "react-icons/io5";
-import { priority } from "../../enum/priority";
+import { Priority } from "../../enum/priority";
 
 type props = {
     task: TaskItemType,
     deleteTask: (id: string) => void,
-    changeTaskState: (id: string, complete?: boolean, priority?: priority) => void,
+    changeTaskState: (id: string, complete?: boolean, priority?: Priority) => void,
     showDescription: (id: string, title: string, description: string | undefined) => void
 }
 const TaskItem = ({task, deleteTask, changeTaskState, showDescription }: props)=>{
     const changePriority = () => {
-        const priorityLenght = Object.keys(priority).length / 2;
+        const priorityLenght = Object.keys(Priority).length / 2;
        // se estiver no ultimo indice vai voltar para o comeco
         if(task.priority + 1 >= priorityLenght){
-            changeTaskState(task.id, undefined, priority.LOW);
+            changeTaskState(task.id, undefined, Priority.LOW);
             return;
         }
         // se não vai adicionar normalmente

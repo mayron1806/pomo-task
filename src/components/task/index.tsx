@@ -6,9 +6,10 @@ import TaskItem from "../TaskItem";
 import * as C from "./style";
 import Block from "../Block";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import Modal from "../Base-modal";
+import Modal from "../Modal";
 import AddTaskForm from "../AddTaskForm";
-import { priority } from "../../enum/priority";
+import { Priority } from "../../enum/priority";
+import Title from "../Title";
 
 enum TaskListFilter{
     ALL,
@@ -20,8 +21,8 @@ const Task = ()=> {
     // lista com todas tarefas
     const {
         state: allTasks,
-        set: setAllTasks
-    } = useLocalState<TaskListType>("tasks", []);
+        setState: setAllTasks
+    } = useLocalState<TaskListType>("tasks" ,[]);
     // adiciona uma nova tarefa
     const addNewTask = (task: TaskItemType) => setAllTasks([...allTasks, task]);
     // filtra as tarefas para definir quais serão exibidas
@@ -46,7 +47,7 @@ const Task = ()=> {
         return t;
     }
     // quando alguma propriedade de alguma tarefa mudar
-    const changeTaskState = (id: string, complete?: boolean, priority?: priority) => {
+    const changeTaskState = (id: string, complete?: boolean, priority?: Priority) => {
         const taskIndex = allTasks.findIndex(task => task.id === id);
         if(taskIndex === -1) return;
 
@@ -75,8 +76,12 @@ const Task = ()=> {
     const [modalTemplate, setModalTemplate] = useState<JSX.Element>();
     // ativa o modal com a descrição da tarefa
     const openDescription = (id: string, title: string, description: string | undefined) => {
+        // "d" é a descrição da tarefa
+        let d = undefined;
+        // se a tarefa tem uma descrição "d" ira receber essa descição
+        if(description) d = <p>{description}</p>;
         setModalTitle(title);
-        setModalTemplate(<p>{description}</p>);
+        setModalTemplate(d);
         setModalIsActive(true);
     }
     // ativa o modal com formulario de adicionar tarefa
@@ -86,15 +91,15 @@ const Task = ()=> {
         setModalIsActive(true);
     };
     return(
-        <C.Container>
+        <>
             <Modal
                 title={modalTitle}
                 template={modalTemplate}
                 disableModal={() => setModalIsActive(false)}
-                state={modalIsActive}
+                isActive={modalIsActive}
             />
             <C.Header>
-                <C.Title>Tarefas</C.Title>
+                <Title title="Tarefas"/>
                 <IoIosAddCircleOutline 
                     className="add-task" 
                     size={30}
@@ -124,7 +129,7 @@ const Task = ()=> {
                     <C.TableHead>
                         <tr>
                             <th></th>
-                            <th className="name">Nome</th>
+                            <th className="left">Nome</th>
                             <th>Prioridade</th>
                             <th></th>
                         </tr>
@@ -144,7 +149,7 @@ const Task = ()=> {
                     </tbody>
                 </table>
             </C.TableContainer>
-        </C.Container>
+        </>
     )
 }
 export default Task;
