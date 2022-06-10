@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Title from "../Title";
 import Timer from "../Timer";
 import * as C from "./style";
@@ -8,29 +8,67 @@ import AjustPomodoroTime from "../AjustPomodoroTime";
 import { useLocalState } from "../../hooks/useLocalState";
 const MINUTES_MULTIPLY = 60;
 
+// valores padrao do pomodoro
+const defaultWorkTime = 25 * MINUTES_MULTIPLY;
+const defaultBreakTime = 5 * MINUTES_MULTIPLY;
+type TimesContextProps = {
+    workTime: {
+        value: number,
+        setValue: (newValue: number) => void
+    },
+    breakTime: {
+        value: number,
+        setValue: (newValue: number) => void
+    }
+}
+export const TimesContext = createContext<TimesContextProps>({
+    workTime: {
+        value: defaultWorkTime,
+        setValue: ()=>{}
+    },
+    breakTime: {
+        value: defaultBreakTime,
+        setValue: ()=>{}
+    }
+});
+
 const Pomodoro = () => {
     const {
         state: workTime, 
         setState: setWorkTime
-    } = useLocalState<number>("work-time",25 * MINUTES_MULTIPLY);
+    } = useLocalState<number>("work-time", defaultWorkTime);
     const {
         state: breakTime, 
         setState: setBreakTime
-    } = useLocalState<number>("break-time",5 * MINUTES_MULTIPLY);
-
+    } = useLocalState<number>("break-time", defaultBreakTime);
+    /*
+    useEffect(()=>{
+        console.log(workTime)
+        console.log(breakTime)
+    }, [workTime, breakTime])
+*/
 
     const [isSettingsActive, setIsSettingsActive] = useState<boolean>(false);
     const enableSettings = () => setIsSettingsActive(true);
     const desableSettings = () => setIsSettingsActive(false);
 
     return(
-        <>
+        <TimesContext.Provider value={
+            {
+                workTime: {
+                    value: workTime, 
+                    setValue: setWorkTime
+                },
+                breakTime: {
+                    value: breakTime,
+                    setValue: setBreakTime
+                }
+            }
+        }>
             <Modal 
                 title="Configurações do pomodoro" 
                 template={
-                    <AjustPomodoroTime 
-                        workTime={{value: workTime, setValue: setWorkTime}}
-                        breakTime={{value: breakTime, setValue: setBreakTime}}
+                    <AjustPomodoroTime
                         close={desableSettings}
                     />
                 }
@@ -46,9 +84,9 @@ const Pomodoro = () => {
                 />
             </C.Header>
             <C.TimerContainer>
-                <Timer workTime={workTime} breakTime={breakTime}/>
+                <Timer />
             </C.TimerContainer>
-        </>
+        </TimesContext.Provider>
     )
 }
 export default Pomodoro;

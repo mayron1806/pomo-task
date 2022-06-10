@@ -1,61 +1,47 @@
-import {useEffect, useReducer} from "react";
+import {useEffect, useReducer, useState} from "react";
 import { getMinutes, getSeconds, addZeroLeft, convertToNumberFormat } from "../../utils/TimeFormat";
 import * as C from "./style";
 type props = {
     time: number,
-    onChange: (time: number) => void
+    onChange: (value: number) => void,
     minSeconds?: number,
     maxSeconds?: number,
     minMinutes?: number,
     maxMinutes?: number,
 }
-type action ={
-    min?: number | string,
-    max?: number | string,
-    current: number | string
-}
-const reducer = (state: string, {min = 0, max = 59, current}: action) : string => {
-    // se for string converte para numero
-    if(typeof(min) === "string") min = parseInt(min);
-    if(typeof(max) === "string") max = parseInt(max);
-    if(typeof(current) === "string") min = parseInt(current);
-
-    if(current > max){
-        return addZeroLeft(max.toString());
-    }
-    if(current < min){
-        return addZeroLeft(min.toString());
-    }
-    return addZeroLeft(current.toString());
-}
 const TimeInput = ({time, maxMinutes, maxSeconds, minMinutes, minSeconds, onChange}:props) => {
-    const [
-        minutes, 
-        dispatchMinutes
-    ] = useReducer(reducer, addZeroLeft(getMinutes(time)));
-    const [
-        seconds, 
-        dispatchSeconds
-    ] = useReducer(reducer, addZeroLeft(getSeconds(time)));
+    const [minutes, setMinutes] = useState<string>(getMinutes(time).toString());
+    const [seconds, setSeconds] = useState<string>(getSeconds(time).toString());
+    useEffect(()=>{
+        setMinutes(getMinutes(time).toString());
+        setSeconds(getSeconds(time).toString());
+    }, [time])
+
+    const clamp = (value: string | number, min: number = 0, max: number = 59) => {
+        const number = typeof(value) === "string" ? parseInt(value) : value;
+        if(number < min) return addZeroLeft(min);
+        if(number > max) return addZeroLeft(max);
+        return addZeroLeft(number);
+    }
+    const updateMinutes = (value: string | number) => setMinutes(clamp(value, minMinutes, maxMinutes));
+    const updateSeconds = (value: string | number) => setSeconds(clamp(value, minSeconds, maxSeconds));
+
+    
 
     useEffect(()=>{
-        onChange(convertToNumberFormat(`${minutes}:${seconds}`));
+        onChange(convertToNumberFormat(minutes, seconds));
     }, [minutes, seconds])
 
     return(
         <C.Time>
             <C.Input 
                 value={minutes}
-                onChange={(e)=>{
-                    dispatchMinutes({current:e.target.value, min: minMinutes, max: maxMinutes})
-                }}
+                onChange={(e)=> updateMinutes(e.target.value)}
             />
             <span>:</span>
             <C.Input
                 value={seconds}
-                onChange={(e) => {
-                    dispatchSeconds({current:e.target.value, min: minSeconds, max: maxSeconds})
-                }}
+                onChange={(e)=> updateSeconds(e.target.value)}
             />
         </C.Time>
     )

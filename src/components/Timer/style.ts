@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 export const Container = styled.div`
     display: grid;
@@ -6,19 +6,65 @@ export const Container = styled.div`
     grid-template-columns: 1fr 1fr;
     width: 100%;
 `;
-export const Time = styled.div`
+export const Timer = styled.div`
     grid-area: timer;
     width: 350px;
     height: 350px;
     background-color: var(--purple);
-    color: var(--white);
-    font-size: 4rem;
-    font-weight: 500;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--purple);
 `;
+// texto do timer
+export const Time = styled.h2`
+    font-size: 4rem;
+    font-weight: 500;
+    color: var(--white);
+    z-index: 2;
+`;
+// waves 
+const animateWaves = () => {
+    return css`.wave{
+        animation-play-state: running;
+    }`;
+}
+export const WaveContainer = styled.div<{animate: boolean}>`
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    ${props => props.animate ? animateWaves() : ""}
+`;
+const waveAnime = keyframes`
+    from{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(-50%);
+    }
+`;
+const calculateDirection = (dir: string | undefined) => {
+    if(dir === "normal" || dir === "reverse") return dir;
+    return "normal";
+}
+export const Wave = styled.img<{duration: number , direction?: string}>`
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: 0;
+    left: 0;
+    animation: ${waveAnime} ${props => props.duration}s linear infinite;
+    animation-direction: ${props => calculateDirection(props.direction)};
+    animation-play-state: paused;
+`;
+
+// texto lateral
 export const Title = styled.h3`
     grid-area: title;
     font-size: 3rem;

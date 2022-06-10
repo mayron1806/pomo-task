@@ -5,7 +5,6 @@ import Container from './components/Container';
 import Pomodoro from './components/Pomodoro/intex';
 import ThemeController from './components/ThemeController';
 import { ThemeProvider } from 'styled-components';
-import { useState } from 'react';
 
 import Theme from './types/Theme';
 import darkTheme from './themes/dark';
@@ -17,6 +16,7 @@ function App() {
     state: currentTheme, 
     setState: setCurrentTheme
   } = useLocalState<Theme>("theme", lightTheme);
+
   console.log(currentTheme);
   return (
     <ThemeProvider theme={currentTheme}>
