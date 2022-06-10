@@ -32,13 +32,24 @@ const animateWaves = () => {
         animation-play-state: running;
     }`;
 }
-export const WaveContainer = styled.div<{animate: boolean}>`
+const wavePositionY = (percent: number) => {
+    // 0% com relação a posição do wave container
+    const zeroPercent = 13;
+     // 100% com relação a posição do wave container
+    const hundredPercent = 69;
+    // diferenca entre eles
+    const difference = hundredPercent - zeroPercent;
+    const res = difference * percent / 100;
+
+    return `-${res + zeroPercent}%`;
+}
+export const WaveContainer = styled.div<{animate: boolean, percentComplete: number}>`
     position: absolute;
     width: 200%;
     height: 200%;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, ${props=> wavePositionY(props.percentComplete)});
     ${props => props.animate ? animateWaves() : ""}
 `;
 const waveAnime = keyframes`

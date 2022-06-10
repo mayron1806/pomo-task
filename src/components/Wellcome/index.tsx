@@ -1,10 +1,11 @@
 import * as C from "./style";
 
 import Title from "../Title";
-import messages from "../../services/messages.json";
+import messages from "../../services/dailyMessages.json";
 import monthName from "../../services/month.json";
 import { useLocalState } from "../../hooks/useLocalState";
 import { useEffect, useState } from "react";
+import { getRandomItem } from "../../utils/Random";
 
 type dailyMessageType = {
     author: string,
@@ -42,8 +43,8 @@ const Wellcome = () => {
     } = useLocalState<dailyMessageType>("dailyMessage", {} as dailyMessageType);
     // pega uma mensagem aleatoria no messages.json
     const getRandomMessage = ()=>{
-        const randomMessageIndex = Math.floor(Math.random() * messages.length);
-        const message = messages[randomMessageIndex];
+        const message = getRandomItem(messages);
+        
         setDailyMessage({
             author: message.author,
             message: message.message,

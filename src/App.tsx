@@ -10,13 +10,18 @@ import Theme from './types/Theme';
 import darkTheme from './themes/dark';
 import lightTheme from './themes/light';
 import { useLocalState } from './hooks/useLocalState';
+import { getNotificationPermision } from './utils/Notification';
+import { useEffect } from 'react';
 
 function App() {
   const {
     state: currentTheme, 
     setState: setCurrentTheme
   } = useLocalState<Theme>("theme", lightTheme);
-
+  useEffect(()=>{
+    getNotificationPermision();
+  }, [])  
+  
   console.log(currentTheme);
   return (
     <ThemeProvider theme={currentTheme}>
