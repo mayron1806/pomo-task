@@ -21,8 +21,7 @@ function App() {
   useEffect(()=>{
     getNotificationPermision();
   }, [])  
-  
-  console.log(currentTheme);
+
   return (
     <ThemeProvider theme={currentTheme}>
        <C.Container>
