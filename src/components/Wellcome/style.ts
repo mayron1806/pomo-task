@@ -7,7 +7,7 @@ export const MessageContainer = styled.div`
     height: 80%;
 `;
 export const Message = styled.p`
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--purple);
     text-align: center;
 `;

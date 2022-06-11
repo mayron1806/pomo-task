@@ -41,12 +41,6 @@ const Pomodoro = () => {
         state: breakTime, 
         setState: setBreakTime
     } = useLocalState<number>("break-time", defaultBreakTime);
-    /*
-    useEffect(()=>{
-        console.log(workTime)
-        console.log(breakTime)
-    }, [workTime, breakTime])
-*/
 
     const [isSettingsActive, setIsSettingsActive] = useState<boolean>(false);
     const enableSettings = () => setIsSettingsActive(true);
@@ -79,7 +73,7 @@ const Pomodoro = () => {
                 <Title title="Pomodoro"/>
                 <IoSettingsOutline 
                     className="settings" 
-                    size={30}
+                    size={25}
                     onClick={()=> enableSettings()}
                 />
             </C.Header>

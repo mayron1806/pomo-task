@@ -22,6 +22,9 @@ const Global = createGlobalStyle`
         --shadow: rgba(0, 0, 0, 0.3);
         
         font-size: 62.5%;
+        @media (max-width: 1200px){
+            font-size: 55%;
+        }
     }
     body{
         font-size: 1rem;

@@ -13,6 +13,9 @@ const H2 = styled.h2`
     &.right{
         text-align: right;
     }
+    @media (max-width: 900px){
+        font-size: 2rem;
+    }
 `;
 type props = {title: string, align?: string}
 

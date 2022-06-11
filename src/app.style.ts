@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     background-color: ${props => props.theme.colors.main};
-    width: 100vw;
-    height: 100vh;
     padding: 2rem;
     display: grid;
-    grid-template-columns: 25vw 1fr 5vw;
+    min-height: 100vh;
+    grid-template-columns: 35vw 1fr auto;
     grid-template-rows: 30vh 1fr;
     grid-template-areas: 
     "tasks wellcome theme"
@@ -15,7 +14,6 @@ export const Container = styled.div`
     transition: 0.5s;
     .tasks{
         grid-area: tasks;
-        min-width: 350px;
     }
     .wellcome{
         grid-area: wellcome;
@@ -25,5 +23,26 @@ export const Container = styled.div`
     }
     .pomodoro{
         grid-area: pomodoro;
+    }
+    @media (max-width: 950px){
+        grid-template-areas: 
+        "pomodoro wellcome theme"
+        "pomodoro tasks tasks";
+    }
+    @media (max-width: 700px){
+        grid-template-areas: 
+        "wellcome wellcome theme"
+        "pomodoro tasks tasks";
+        grid-template-columns: 40vw 1fr auto;
+        grid-template-rows: 25vh 1fr;
+    }
+    @media (max-width: 600px){
+        grid-template-columns: 1fr 10vw;
+        grid-template-rows: 30vh 1fr 1fr auto;
+        grid-template-areas: 
+        "wellcome wellcome"
+        "pomodoro pomodoro"
+        "tasks tasks"
+        "theme theme";
     }
 `;

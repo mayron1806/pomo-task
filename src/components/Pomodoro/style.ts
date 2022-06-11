@@ -4,6 +4,7 @@ export const TimerContainer = styled.div`
     height: 90%;
     display: flex;
     align-items: center;
+    margin-bottom: 1rem;
 `;
 export const Header = styled.header`
     display: flex;

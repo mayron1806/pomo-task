@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 
 export const Button = styled.button<{filled: boolean}>`
-    width: 50%;
+    width: 100%;
+    min-width: fit-content;
     font-size: 2.5rem;
     font-weight: 600;
     padding: 1rem 2rem;

@@ -1,18 +1,29 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 
 const activeModal = (active: boolean) => {
-    if(active) return css`transform: translateX(0%)`;
-    
-    return css`transform: translateX(-100%)`;
+    if(active) {
+        
+        // desabilita scroll do body
+        document.body.style.overflow = "hidden";
+        // pega o valor do scroll atual para adicionar como margem para o modal
+        const scrollTop = document.documentElement.scrollTop;   
+        return css`
+            transform: scale(1); 
+            margin-top: ${scrollTop}px;
+        `;
+    }
+     // abilita scroll do body
+    document.body.style.overflow = "auto";
+
+    return css`transform: scale(0);`;
 }
 export const Container = styled.div<{active: boolean}>`
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     position: absolute;
     z-index: 10;
     top: 0;
     left: 0;
-    transform: translateX(-100%);
     background-color: rgba(0,0,0,0.1);
     ${props => activeModal(props.active)}
 `;
@@ -27,6 +38,10 @@ export const Modal = styled.div`
     box-shadow: 0 0 15px var(--shadow);
     min-width: 450px;
     transition: 0.5s;
+    @media (max-width: 500px){
+        width: 80vw;
+        min-width: auto;
+    }
 `;
 // modal header
 export const Header = styled.div`

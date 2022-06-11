@@ -4,7 +4,14 @@ export const Container = styled.div`
     display: grid;
     grid-template-areas: "timer title" "timer buttons";
     grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
     width: 100%;
+    @media (max-width: 950px){
+        grid-template-areas: "title" "timer" "buttons"; 
+        grid-template-columns: 1fr;
+        justify-items: center;
+        grid-gap: 3rem;
+    }
 `;
 export const Timer = styled.div`
     grid-area: timer;
@@ -18,13 +25,29 @@ export const Timer = styled.div`
     position: relative;
     overflow: hidden;
     border: 2px solid var(--purple);
+    @media (max-width: 1200px){
+        width: 300px;
+        height: 300px;
+    }
+    @media (max-width: 950px){
+        width: 250px;
+        height: 250px;
+    }
+    @media (max-width: 800px){
+        width: 200px;
+        height: 200px;
+    }
 `;
 // texto do timer
 export const Time = styled.h2`
-    font-size: 4rem;
+    text-align: center;
+    font-size: 5rem;
     font-weight: 500;
     color: var(--white);
     z-index: 2;
+    @media (max-width: 950px){
+        font-size: 3.5rem;
+    }
 `;
 // waves 
 const animateWaves = () => {
@@ -81,6 +104,10 @@ export const Title = styled.h3`
     font-size: 3rem;
     font-weight: 500;
     color: var(--purple);
+    @media (max-width: 950px){
+        font-size: 2.5rem;
+        text-align: center;
+    }
 `;
 export const ButtonsContainer = styled.div`
     grid-area: buttons;
@@ -88,4 +115,8 @@ export const ButtonsContainer = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
+    width: 50%;
+    @media (max-width: 950px){
+        width: 100%;
+    }
 `;
