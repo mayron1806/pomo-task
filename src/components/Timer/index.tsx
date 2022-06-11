@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, memo } from "react";
 import { convertToMinutesFormat, getMinutes, getSeconds } from "../../utils/TimeFormat";
 import Button from "../Button";
 import * as C from "./style";
@@ -16,7 +16,7 @@ enum TimeState {
     WORK,
     BREAK
 }
-const Timer = () => {
+const Timer = memo(() => {
     const times = useContext(TimesContext);
     const [currentTime, setCurrentTime] = useState<number>(times.workTime.value);
     const [timeState, setTimeState] = useState<TimeState>(TimeState.WORK);
@@ -124,5 +124,5 @@ const Timer = () => {
             </C.ButtonsContainer>
         </C.Container>
     )
-}
+})
 export default Timer;

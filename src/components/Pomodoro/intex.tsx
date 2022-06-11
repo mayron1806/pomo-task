@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, memo, useState } from "react";
 import Title from "../Title";
 import Timer from "../Timer";
 import * as C from "./style";
@@ -6,6 +6,7 @@ import {IoSettingsOutline} from "react-icons/io5"
 import Modal from "../Modal";
 import AjustPomodoroTime from "../AjustPomodoroTime";
 import { useLocalState } from "../../hooks/useLocalState";
+
 const MINUTES_MULTIPLY = 60;
 
 // valores padrao do pomodoro
@@ -32,11 +33,12 @@ export const TimesContext = createContext<TimesContextProps>({
     }
 });
 
-const Pomodoro = () => {
+const Pomodoro = memo(() => {
     const {
         state: workTime, 
         setState: setWorkTime
     } = useLocalState<number>("work-time", defaultWorkTime);
+
     const {
         state: breakTime, 
         setState: setBreakTime
@@ -82,5 +84,5 @@ const Pomodoro = () => {
             </C.TimerContainer>
         </TimesContext.Provider>
     )
-}
+})
 export default Pomodoro;
