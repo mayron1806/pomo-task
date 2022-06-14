@@ -11,7 +11,6 @@ export const TableData = styled.td`
         cursor: pointer;
     }
 `;
-
 export const CheckBox = styled.div<{active: boolean}>`
     width: 15px;
     height: 15px;
