@@ -1,6 +1,17 @@
 import styled from "styled-components";
 import { Priority as P } from "../../enum/priority";
 
+export const TableData = styled.td`
+    text-align: center;
+    color: ${props => props.theme.text_color};
+    &.left{
+        text-align: left;
+    }
+    .close-icon{
+        cursor: pointer;
+    }
+`;
+
 export const CheckBox = styled.div<{active: boolean}>`
     width: 15px;
     height: 15px;
@@ -9,19 +20,10 @@ export const CheckBox = styled.div<{active: boolean}>`
     border: 1px solid var(--purple);
     cursor: pointer;
 `;
-export const TableData = styled.td`
-    text-align: center;
-    color: ${props => props.theme.colors.text_color};
-    &.left{
-        text-align: left;
-    }
-    .close-icon{
-        cursor: pointer;
-    }
-`;
+
 export const Name = styled.p<{complete: boolean}>`
     font-size: 1.6rem;
-    color: ${props => props.theme.colors.text_color}    ;
+    color: ${props => props.theme.text_color}    ;
     text-decoration: ${props => props.complete ? "line-through" : "none"};
     cursor: pointer;
     text-overflow: ellipsis;
@@ -29,7 +31,7 @@ export const Name = styled.p<{complete: boolean}>`
     max-width: 140px;
     overflow: hidden;
 `;
-
+/* PRIORITY ---------------------------------------------------------------------------------- */
 const priorityStyle = (p: P) => {
     let color;
     let text;
@@ -55,7 +57,7 @@ const priorityStyle = (p: P) => {
     `;
 }
 export const PriorityContainer = styled.div`
-    color: ${props => props.theme.colors.text_color};
+    color: ${props => props.theme.text_color};
     width: 100%;
     display: flex;
     justify-content: center;

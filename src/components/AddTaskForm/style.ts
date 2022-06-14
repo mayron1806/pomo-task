@@ -1,10 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
-export const Form = styled.form`
-    .priority{
-        margin-top: 2rem;
-    }
-`;
+/* ANIMATION -----------------------------------------------------------------------------------*/
 const vibrateAnim = keyframes`
     0%, 20%{
         transform: translateX(0);
@@ -25,7 +21,9 @@ const vibrateAnim = keyframes`
         transform: translateX(0px);
     }
 `;
-export const Input = styled.input`
+
+/* COMPONENTS --------------------------------------------------------------------------------- */
+export const Input = styled.input.attrs({type:"text"})`
     font-size: 1.8rem;
     padding: 0.5rem;
     border: 1px solid var(--purple);
@@ -47,6 +45,7 @@ export const Text = styled.textarea`
     box-shadow: 2px 2px 5px var(--light-purple);
     padding: 0.5rem;
 `;
+export const PriorityContainer = styled.div` margin-top: 2rem; `;
 export const Select = styled.select`
     padding: 0.5rem;
     border: 1px solid var(--purple);

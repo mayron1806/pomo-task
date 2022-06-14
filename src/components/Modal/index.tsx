@@ -1,5 +1,6 @@
 import * as C from "./style";
 import { IoClose } from "react-icons/io5"
+
 type props = {
     template: JSX.Element | undefined,
     title: string | undefined,
@@ -9,7 +10,7 @@ type props = {
 }
 const Modal = ({ template, title, disableModal, isActive, ref}: props) => {
     return(
-        <C.Container active={isActive} ref={ref}>
+        <C.Background active={isActive} ref={ref}>
             <C.Modal className="modal">
                 <C.Header>
                     <C.Title>{title}</C.Title>
@@ -19,7 +20,7 @@ const Modal = ({ template, title, disableModal, isActive, ref}: props) => {
                     {template}
                 </C.Content>
             </C.Modal>
-        </C.Container>
+        </C.Background>
     )
 }
 export default Modal;

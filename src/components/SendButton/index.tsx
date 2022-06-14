@@ -18,8 +18,6 @@ const Submit = styled.input.attrs({type: "submit"})`
 `;
 type props = {value: string}
 const SendButton = ({value}: props) => {
-    return(
-        <Submit value={value} />
-    )
+    return <Submit value={value} />
 }
 export default SendButton;

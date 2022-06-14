@@ -1,47 +1,50 @@
-import {useEffect, useReducer, useState} from "react";
+import {useEffect, useState} from "react";
+
 import { getMinutes, getSeconds, addZeroLeft, convertToNumberFormat } from "../../utils/TimeFormat";
+
 import * as C from "./style";
+
+const clamp = (value: number, min: number = 0, max: number = 59) => {
+    if(value < min) return addZeroLeft(min);
+    if(value > max) return addZeroLeft(max);
+    return addZeroLeft(value);
+}
+
 type props = {
     time: number,
-    onChange: (value: number) => void,
+    onChange: React.Dispatch<React.SetStateAction<number>>,
     minSeconds?: number,
     maxSeconds?: number,
     minMinutes?: number,
     maxMinutes?: number,
+    id?: string
 }
-const TimeInput = ({time, maxMinutes, maxSeconds, minMinutes, minSeconds, onChange}:props) => {
+const TimeInput = ({time, maxMinutes, maxSeconds, minMinutes, minSeconds, onChange, id}:props) => {
     const [minutes, setMinutes] = useState<string>(getMinutes(time).toString());
     const [seconds, setSeconds] = useState<string>(getSeconds(time).toString());
-    useEffect(()=>{
+
+    const updateMinutes = (value: number) => setMinutes(clamp(value, minMinutes, maxMinutes));
+    const updateSeconds = (value: number) => setSeconds(clamp(value, minSeconds, maxSeconds));
+
+    useEffect(() => {
         setMinutes(getMinutes(time).toString());
         setSeconds(getSeconds(time).toString());
     }, [time])
-
-    const clamp = (value: string | number, min: number = 0, max: number = 59) => {
-        const number = typeof(value) === "string" ? parseInt(value) : value;
-        if(number < min) return addZeroLeft(min);
-        if(number > max) return addZeroLeft(max);
-        return addZeroLeft(number);
-    }
-    const updateMinutes = (value: string | number) => setMinutes(clamp(value, minMinutes, maxMinutes));
-    const updateSeconds = (value: string | number) => setSeconds(clamp(value, minSeconds, maxSeconds));
-
-    
-
+    // quando mudar algum valor dos inputs vai chamar a função onChange
     useEffect(()=>{
         onChange(convertToNumberFormat(minutes, seconds));
     }, [minutes, seconds])
 
     return(
-        <C.Time>
+        <C.Time id={id}>
             <C.Input 
                 value={minutes}
-                onChange={(e)=> updateMinutes(e.target.value)}
+                onChange={(e)=> updateMinutes(parseInt(e.target.value))}
             />
             <span>:</span>
             <C.Input
                 value={seconds}
-                onChange={(e)=> updateSeconds(e.target.value)}
+                onChange={(e)=> updateSeconds(parseInt(e.target.value))}
             />
         </C.Time>
     )

@@ -1,11 +1,16 @@
 import { FormEvent, useState, useRef, useEffect } from "react";
+
 import { Priority as p } from "../../enum/priority";
 import { TaskItemType } from "../../types/taskItemType";
+
 import * as C from "./style";
+
 import { v4 as getID } from "uuid";
+
 import Label from "../Label/intex";
 import ErrorMessage from "../ErrorMessage";
 import SendButton from "../SendButton";
+
 type props = {
     addTask: (task: TaskItemType) => void,
     closeForm: () => void
@@ -20,12 +25,13 @@ const AddTaskForm = ({addTask, closeForm}: props) => {
 
     useEffect(()=>{
         if(name.length > 0){
-          //  nameInputRef.current?.classList.remove("error");
-           // nameInputRef.current?.focus();
+            nameInputRef.current?.classList.remove("error");
+            nameInputRef.current?.focus();
+            setErrorMessage("");
         }
     }, [name])
 
-    const reset = () => {
+    const resetForm = () => {
         setName("");
         setPriority(0);
         setDescription("");
@@ -44,7 +50,7 @@ const AddTaskForm = ({addTask, closeForm}: props) => {
                 priority: priority,
                 description: description
             }
-            reset();
+            resetForm();
             addTask(task);
             closeForm();
             return;
@@ -53,17 +59,16 @@ const AddTaskForm = ({addTask, closeForm}: props) => {
         setErrorMessage("Você precisa peencher o campo nome.");
     }
     return(
-        <C.Form onSubmit={(e) => sendForm(e)}>
+        <form onSubmit={(e) => sendForm(e)}>
             <Label htmlFor="name">Nome da tarefa</Label>
             <C.Input
                 ref={nameInputRef} 
-                type="text" 
                 name="name"
                 placeholder="Ex: Estudar Matemática"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
-            <div className="priority">
+            <C.PriorityContainer>
                 <Label className="inline" htmlFor="priority">Prioridade:</Label>
                 <C.Select 
                     name="priority" 
@@ -74,7 +79,7 @@ const AddTaskForm = ({addTask, closeForm}: props) => {
                     <option value={p.MEDIUM}>Média</option>
                     <option value={p.HIGH}>Alta</option>
                 </C.Select>
-            </div>
+            </C.PriorityContainer>
             <Label htmlFor="description">Descrição</Label>
             <C.Text 
                 maxLength={500} 
@@ -86,7 +91,7 @@ const AddTaskForm = ({addTask, closeForm}: props) => {
             />
             <ErrorMessage>{errorMessage}</ErrorMessage>
             <SendButton value="Criar"/>
-        </C.Form>
+        </form>
     )
 }
 export default AddTaskForm;

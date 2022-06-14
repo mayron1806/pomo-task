@@ -46,7 +46,7 @@ export const Container = styled.div`
     }
 `;
 export const Button = styled.button`
-    background-color: ${props => props.theme.colors.main};
+    background-color: ${props => props.theme.main};
     height: 100%;
     width: 100%;
     font-size: 2.5rem;
@@ -55,5 +55,5 @@ export const Button = styled.button`
     padding: 1rem;
 `;
 export const TextButton = styled.p`
-    color: ${props => props.theme.colors.text_color};
+    color: ${props => props.theme.text_color};
 `;

@@ -2,7 +2,7 @@ import Task from './components/Task';
 import * as C from "./app.style";
 import Wellcome from './components/Wellcome';
 import Container from './components/Container';
-import Pomodoro from './components/Pomodoro/intex';
+import Pomodoro from './components/Pomodoro';
 import ThemeController from './components/ThemeController';
 import { ThemeProvider } from 'styled-components';
 
@@ -10,7 +10,7 @@ import Theme from './types/Theme';
 import darkTheme from './themes/dark';
 import lightTheme from './themes/light';
 import { useLocalState } from './hooks/useLocalState';
-import { getNotificationPermision } from './utils/Notification';
+import { canNotify, getNotificationPermision } from './utils/Notification';
 import { useEffect } from 'react';
 
 function App() {
@@ -18,13 +18,13 @@ function App() {
     state: currentTheme, 
     setState: setCurrentTheme
   } = useLocalState<Theme>("theme", lightTheme);
-  useEffect(()=>{
-    getNotificationPermision();
-  }, [])  
+
+  // se nao pode enviar noficação vai pedir permissão quando renderizar o app
+  useEffect(()=>{ !canNotify() && getNotificationPermision()}, [])  
 
   return (
-    <ThemeProvider theme={currentTheme}>
-       <C.Container>
+    <ThemeProvider theme={currentTheme.colors}>
+       <C.Main>
         <Container className='tasks'>
           <Task />
         </Container>
@@ -35,7 +35,7 @@ function App() {
           <Pomodoro />
         </Container>
         <ThemeController theme={currentTheme} setTheme={setCurrentTheme}/>
-      </C.Container>
+      </C.Main>
     </ThemeProvider>
    
   );

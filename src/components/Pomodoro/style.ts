@@ -10,7 +10,7 @@ export const Header = styled.header`
     display: flex;
     justify-content: space-between;
     .settings{
-        color: ${props => props.theme.colors.text_color};
+        color: ${props => props.theme.text_color};
         cursor: pointer;
     }
 `;

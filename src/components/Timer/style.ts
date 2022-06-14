@@ -13,6 +13,7 @@ export const Container = styled.div`
         grid-gap: 3rem;
     }
 `;
+/* CIRCLE TIMER ------------------------------------------------------------------------------ */
 export const Timer = styled.div`
     grid-area: timer;
     width: 350px;
@@ -49,7 +50,7 @@ export const Time = styled.h2`
         font-size: 3.5rem;
     }
 `;
-// waves 
+/* WAVES ------------------------------------------------------------------------------------- */
 const animateWaves = () => {
     return css`.wave{
         animation-play-state: running;
@@ -83,7 +84,7 @@ const waveAnime = keyframes`
         transform: translateX(-50%);
     }
 `;
-const calculateDirection = (dir: string | undefined) => {
+const calculateWaveDirection = (dir: string | undefined) => {
     if(dir === "normal" || dir === "reverse") return dir;
     return "normal";
 }
@@ -94,11 +95,11 @@ export const Wave = styled.img<{duration: number , direction?: string}>`
     top: 0;
     left: 0;
     animation: ${waveAnime} ${props => props.duration}s linear infinite;
-    animation-direction: ${props => calculateDirection(props.direction)};
+    animation-direction: ${props => calculateWaveDirection(props.direction)};
     animation-play-state: paused;
 `;
 
-// texto lateral
+/* TITLE ------------------------------------------------------------------------------------ */
 export const Title = styled.h3`
     grid-area: title;
     font-size: 3rem;
@@ -109,6 +110,7 @@ export const Title = styled.h3`
         text-align: center;
     }
 `;
+/* BUTTONS --------------------------------------------------------------------------------- */
 export const ButtonsContainer = styled.div`
     grid-area: buttons;
     display: flex;

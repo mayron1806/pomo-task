@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-    background-color: ${props => props.theme.colors.main};
+export const Main = styled.div`
+    background-color: ${props => props.theme.main};
     padding: 2rem;
     display: grid;
     min-height: 100vh;

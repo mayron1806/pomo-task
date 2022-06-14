@@ -5,7 +5,7 @@ export const Header = styled.div`
     justify-content: space-between;
     .add-task{
         cursor: pointer;
-        color: ${props => props.theme.colors.text_color};
+        color: ${props => props.theme.text_color};
     }
 `;
 /* BLOCK------------------------------------------------------------------------------------------*/
@@ -16,7 +16,7 @@ export const BlocksContainer = styled.div`
     gap: 3rem;
     margin: 1rem 0;
 `;
-export const Button = styled.button`
+export const FilterButton = styled.button`
     width: 100%;
     padding: 0.5rem;
     background-color: transparent;
@@ -56,7 +56,7 @@ export const TableContainer = styled.div`
 `;
 export const TableHead = styled.thead`
     font-size: 2rem;
-    color: ${props => props.theme.colors.text_color};
+    color: ${props => props.theme.text_color};
     th{
         font-weight: 400;
     }

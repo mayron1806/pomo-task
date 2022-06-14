@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+/* CONTAINER ---------------------------------------------------------------------------------- */
 export const Time = styled.div`
     border: 1px solid var(--purple);
     border-radius: 10px;
@@ -9,8 +10,8 @@ export const Time = styled.div`
     span{
         transform:translateY(-2px)
     }
-    
 `;
+/* INPUT ------------------------------------------------------------------------------------- */
 export const Input = styled.input.attrs({type:"number"})`
     // remove arrows
     ::-webkit-outer-spin-button,
@@ -24,6 +25,6 @@ export const Input = styled.input.attrs({type:"number"})`
     padding:0.3rem;
     text-align: center;
     width: 30px;
-    background-color: ${props=> props.theme.colors.main};
-    color: ${props=> props.theme.colors.text_color};
+    background-color: ${props=> props.theme.main};
+    color: ${props=> props.theme.text_color};
 `;

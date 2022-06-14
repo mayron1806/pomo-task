@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 
 const activeModal = (active: boolean) => {
     if(active) {
-        
         // desabilita scroll do body
         document.body.style.overflow = "hidden";
         // pega o valor do scroll atual para adicionar como margem para o modal
@@ -17,7 +16,7 @@ const activeModal = (active: boolean) => {
 
     return css`transform: scale(0);`;
 }
-export const Container = styled.div<{active: boolean}>`
+export const Background = styled.div<{active: boolean}>`
     width: 100%;
     height: 100%;
     position: absolute;
@@ -27,12 +26,14 @@ export const Container = styled.div<{active: boolean}>`
     background-color: rgba(0,0,0,0.1);
     ${props => activeModal(props.active)}
 `;
+
+/* MODAL -------------------------------------------------------------------------------------- */
 export const Modal = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: ${props => props.theme.colors.main};
+    background-color: ${props => props.theme.main};
     padding: 2rem;
     border-radius: 3rem;
     box-shadow: 0 0 15px var(--shadow);
@@ -43,24 +44,26 @@ export const Modal = styled.div`
         min-width: auto;
     }
 `;
-// modal header
+
+/* HEADER --------------------------------------------------------------------------------------*/
 export const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
     .close-modal{
-        color: ${props => props.theme.colors.text_color};
+        color: ${props => props.theme.text_color};
         cursor: pointer;
     }
 `;
-// title modal header
 export const Title = styled.h2`
     font-size: 2.5rem;
     color: var(--purple);
     font-weight: 500;
 `;
+
+/* CONTENT ------------------------------------------------------------------------------------*/
 export const Content = styled.div<{hasContent: boolean}>`
     ${props => props.hasContent ? "padding: 1rem 0;" : "padding: 0;"}
     font-size: 2rem;
-    color: ${props => props.theme.colors.text_color};
+    color: ${props => props.theme.text_color};
 `;

@@ -18,7 +18,6 @@ const getSeconds = (value: number | string) => {
     if(typeof(value) === "string") value = parseInt(value); 
     return addZeroLeft(Math.floor(value % 60));
 }
-
 export {
     convertToMinutesFormat,
     convertToNumberFormat,

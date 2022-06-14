@@ -11,11 +11,7 @@ const Container = styled.label`
         padding-right: 1rem;
     }
 `;
-type props = {
-    children?: string,
-    htmlFor?: string,
-    className?: string
-}
+type props = { children?: string, htmlFor?: string, className?: string }
 const Label = ({ children, htmlFor, className}: props) => {
     return(
         <Container className={className} htmlFor={htmlFor}>{children}</Container>

@@ -7,7 +7,7 @@ const Message = styled.p`
     font-weight: 400;
     text-align: center;
 `;
-type props = {children?: string}
+type props = { children?: string }
 
 const ErrorMessage = ({children}: props) => {
     return <Message>{children}</Message>
