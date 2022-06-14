@@ -1,7 +1,7 @@
 import { IoClose } from "react-icons/io5";
 import { TaskItemType } from "../../types/taskItemType";
 import { Priority } from "../../enum/priority";
-import * as C from "./style";
+import * as C from "./styles";
 
 type props = {
     task: TaskItemType,
@@ -9,7 +9,7 @@ type props = {
     changeTaskState: (id: string, complete?: boolean, priority?: Priority) => void,
     showDescription: (title: string, description: string | undefined) => void
 }
-const TaskItem = ({task, deleteTask, changeTaskState, showDescription }: props)=>{
+const Item = ({task, deleteTask, changeTaskState, showDescription }: props)=>{
     const changePriority = () => {
         const priorityLenght = Object.keys(Priority).length / 2;
        // se estiver no ultimo indice vai voltar para o comeco
@@ -39,4 +39,4 @@ const TaskItem = ({task, deleteTask, changeTaskState, showDescription }: props)=
         </tr>
     )
 }
-export default TaskItem;
+export default Item;

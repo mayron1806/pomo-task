@@ -3,9 +3,7 @@ import { useLocalState } from "../../hooks/useLocalState";
 
 import { TaskItemType } from "../../types/taskItemType";
 import { TaskListType } from "../../types/taskListType";
-/*
-import TaskItem from "../TaskItem";*/
-import TaskItem from "../TaskItem/index";
+import Item from "../Item";
 import Block from "../Block";
 import Modal from "../Modal";
 import AddTaskForm from "../AddTaskForm";
@@ -148,7 +146,7 @@ const TaskList = () => {
                     <tbody>
                     { 
                         tasks().map((task)=> (
-                            <TaskItem 
+                            <Item 
                                 key={task.id} 
                                 task={task}
                                 changeTaskState={changeTaskState} 
