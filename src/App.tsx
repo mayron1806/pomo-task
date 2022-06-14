@@ -1,6 +1,6 @@
 import Wellcome from './components/Wellcome';
-/*import Task from './components/Task';*/
-import Task from './components/Task';
+
+import TaskList from './components/TaskList';
 import Container from './components/Container';
 import Pomodoro from './components/Pomodoro';
 import ThemeController from './components/ThemeController';
@@ -27,7 +27,7 @@ function App() {
     <ThemeProvider theme={currentTheme.colors}>
        <C.Main>
         <Container className='tasks'>
-          <Task />
+          <TaskList />
         </Container>
         <Container className='wellcome'>
           <Wellcome />

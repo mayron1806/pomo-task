@@ -21,7 +21,7 @@ enum TaskListFilter{
     COMPLETE,
     INCOMPLETE
 }
-const Task = () => {
+const TaskList = () => {
     // TAREFAS ---------------------------------------------------------------------------------
     // lista com todas tarefas
     const {
@@ -162,4 +162,4 @@ const Task = () => {
         </>
     )
 }
-export default Task;
+export default TaskList;
