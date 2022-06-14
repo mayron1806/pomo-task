@@ -1,13 +1,15 @@
+import React from 'react';
+
 import Task from './components/Task';
-import * as C from "./app.style";
 import Wellcome from './components/Wellcome';
 import Container from './components/Container';
 import Pomodoro from './components/Pomodoro';
 import ThemeController from './components/ThemeController';
 import { ThemeProvider } from 'styled-components';
 
+import * as C from "./app.style";
+
 import Theme from './types/Theme';
-import darkTheme from './themes/dark';
 import lightTheme from './themes/light';
 import { useLocalState } from './hooks/useLocalState';
 import { canNotify, getNotificationPermision } from './utils/Notification';
