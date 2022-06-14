@@ -1,10 +1,10 @@
 import React from 'react';
-/*
-import Task from './components/Task';
+
 import Wellcome from './components/Wellcome';
+import Task from './components/Task';
 import Container from './components/Container';
 import Pomodoro from './components/Pomodoro';
-import ThemeController from './components/ThemeController';*/
+import ThemeController from './components/ThemeController';
 import { ThemeProvider } from 'styled-components';
 
 import * as C from "./app.style";
@@ -27,7 +27,6 @@ function App() {
   return (
     <ThemeProvider theme={currentTheme.colors}>
        <C.Main>
-        {/*
         <Container className='tasks'>
           <Task />
         </Container>
@@ -38,7 +37,6 @@ function App() {
           <Pomodoro />
         </Container>
         <ThemeController theme={currentTheme} setTheme={setCurrentTheme}/>
-*/}
       </C.Main>
     </ThemeProvider>
    

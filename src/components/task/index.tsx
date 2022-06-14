@@ -145,17 +145,17 @@ const Task = ()=> {
                         </tr>
                     </C.TableHead>
                     <tbody>
-                        { 
-                            tasks().map((task)=> (
-                                <TaskItem 
-                                    key={task.id} 
-                                    task={task}
-                                    changeTaskState={changeTaskState} 
-                                    deleteTask={deleteTask}
-                                    showDescription={openDescription}
-                                />
-                            ))
-                        }
+                    { 
+                        tasks().map((task)=> (
+                            <TaskItem 
+                                key={task.id} 
+                                task={task}
+                                changeTaskState={changeTaskState} 
+                                deleteTask={deleteTask}
+                                showDescription={openDescription}
+                            />
+                        ))
+                    }
                     </tbody>
                 </table>
             </C.TableContainer>
