@@ -5,6 +5,7 @@ import { TaskItemType } from "../../types/taskItemType";
 import { TaskListType } from "../../types/taskListType";
 /*
 import TaskItem from "../TaskItem";*/
+import TaskItem from "../TaskItem/index";
 import Block from "../Block";
 import Modal from "../Modal";
 import AddTaskForm from "../AddTaskForm";
@@ -145,7 +146,7 @@ const TaskList = () => {
                         </tr>
                     </C.TableHead>
                     <tbody>
-                    { /*
+                    { 
                         tasks().map((task)=> (
                             <TaskItem 
                                 key={task.id} 
@@ -154,7 +155,7 @@ const TaskList = () => {
                                 deleteTask={deleteTask}
                                 showDescription={openDescription}
                             />
-                        ))*/
+                        ))
                     }
                     </tbody>
                 </table>
