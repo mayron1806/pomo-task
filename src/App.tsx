@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Wellcome from './components/Wellcome';
 /*import Task from './components/Task';*/
 import Task from './components/Task';
