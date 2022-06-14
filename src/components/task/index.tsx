@@ -3,8 +3,8 @@ import { useLocalState } from "../../hooks/useLocalState";
 
 import { TaskItemType } from "../../types/taskItemType";
 import { TaskListType } from "../../types/taskListType";
-
-import TaskItem from "../TaskItem";
+/*
+import TaskItem from "../TaskItem";*/
 import Block from "../Block";
 import Modal from "../Modal";
 import AddTaskForm from "../AddTaskForm";
@@ -145,7 +145,7 @@ const Task = ()=> {
                         </tr>
                     </C.TableHead>
                     <tbody>
-                    { 
+                    { /*
                         tasks().map((task)=> (
                             <TaskItem 
                                 key={task.id} 
@@ -154,7 +154,7 @@ const Task = ()=> {
                                 deleteTask={deleteTask}
                                 showDescription={openDescription}
                             />
-                        ))
+                        ))*/
                     }
                     </tbody>
                 </table>
