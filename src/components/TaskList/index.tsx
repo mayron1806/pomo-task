@@ -5,7 +5,7 @@ import { TaskItemType } from "../../types/taskItemType";
 import { TaskListType } from "../../types/taskListType";
 /*
 import TaskItem from "../TaskItem";*/
-import TaskItem from "../TaskItem/index";
+import TaskItem from "../taskItem/index";
 import Block from "../Block";
 import Modal from "../Modal";
 import AddTaskForm from "../AddTaskForm";
