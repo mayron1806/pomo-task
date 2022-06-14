@@ -2,6 +2,7 @@ import React from 'react';
 
 import Wellcome from './components/Wellcome';
 /*import Task from './components/Task';*/
+import Task from './components/Task';
 import Container from './components/Container';
 import Pomodoro from './components/Pomodoro';
 import ThemeController from './components/ThemeController';
@@ -27,9 +28,9 @@ function App() {
   return (
     <ThemeProvider theme={currentTheme.colors}>
        <C.Main>
-        {/*<Container className='tasks'>
+        <Container className='tasks'>
           <Task />
-        </Container>*/}
+        </Container>
         <Container className='wellcome'>
           <Wellcome />
         </Container>
