@@ -1,6 +1,4 @@
 import { IoClose } from "react-icons/io5";
-
-import { Priority } from "../../enum/priority";
 import { TaskItemType } from "../../types/taskItemType";
 
 import styled from "styled-components";
@@ -80,7 +78,7 @@ export const Priority = styled.p<{priority: P}>`
 type props = {
     task: TaskItemType,
     deleteTask: (id: string) => void,
-    changeTaskState: (id: string, complete?: boolean, priority?: Priority) => void,
+    changeTaskState: (id: string, complete?: boolean, priority?: P) => void,
     showDescription: (title: string, description: string | undefined) => void
 }
 const TaskItem = ({task, deleteTask, changeTaskState, showDescription }: props)=>{
