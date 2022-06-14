@@ -59,7 +59,7 @@ const Wellcome = () => {
             return;
         }
         setDailyMessage(getRandomMessage());
-    }, [dailyMessage]);
+    }, [dailyMessage, setDailyMessage]);
     
     return(
         <>

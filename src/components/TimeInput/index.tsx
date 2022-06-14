@@ -33,7 +33,7 @@ const TimeInput = ({time, maxMinutes, maxSeconds, minMinutes, minSeconds, onChan
     // quando mudar algum valor dos inputs vai chamar a função onChange
     useEffect(()=>{
         onChange(convertToNumberFormat(minutes, seconds));
-    }, [minutes, seconds])
+    }, [minutes, seconds, onChange])
 
     return(
         <C.Time id={id}>

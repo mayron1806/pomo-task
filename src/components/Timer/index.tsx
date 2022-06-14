@@ -64,7 +64,7 @@ const Timer = memo(() => {
     useEffect(() => {
         if (isWorking) restart(newTimeToTimer(times.workTime.value), false);
         if(!isWorking) restart(newTimeToTimer(times.breakTime.value), false);
-    }, [times, isWorking])
+    }, [times, isWorking, restart])
     
     // muda para tempo de trabalho ou descanso
     const changeTime = () => {
@@ -90,7 +90,7 @@ const Timer = memo(() => {
                 />
             </C.Timer>
             <C.Title>
-                { isWorking && "Hora de trabalhar" || "Merecido descanso" }
+                { isWorking ? "Hora de trabalhar" : "Merecido descanso" }
             </C.Title>
             <C.ButtonsContainer>
                 {
