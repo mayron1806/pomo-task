@@ -64,7 +64,7 @@ const Timer = memo(() => {
     useEffect(() => {
         if (isWorking) restart(newTimeToTimer(times.workTime.value), false);
         if(!isWorking) restart(newTimeToTimer(times.breakTime.value), false);
-    }, [times, isWorking, restart])
+    }, [times, isWorking])
     
     // muda para tempo de trabalho ou descanso
     const changeTime = () => {
