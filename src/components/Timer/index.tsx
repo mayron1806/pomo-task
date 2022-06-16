@@ -63,36 +63,46 @@ const Timer = memo(() => {
         autoStart: false,
         onExpire: () => expire()
     });
-  
+    const [timeExpire, setTimeExpire] = useState<boolean>(false);
 
+    // para o audio, muda o tempo entre descanso e trabalho e reseta o time expire
+    const reset = () => {
+        audio.stop();
+        changeTime();
+        setTimeExpire(false);
+    }
+    // chamada quando o tempo do timer chega acaba
     const expire = () => {
+        setTimeExpire(true);
         // notificação 
         // se pode notificar vai enviar a notificação e atribuir a variavel
-        let notification = canNotify() && sendTimerNotification(isWorking);
-        
+        let notification = undefined;
+        if(canNotify() && document.visibilityState !== "visible"){
+            notification = sendTimerNotification(isWorking);
+        }
         // audio
+        // se nao pode reproduzir audio retorna
         if(!pomodoro.canPlayAudio.value) return;
-        audio.play();
-        audio.enableLoop();
-        if(notification){
-            notification.onclose = () => {
-                audio.stop();
-                changeTime();
-            }
-            notification.onclick = () => {
-                audio.stop();
-                changeTime();
+        // se o usuario NAO estiver com a tela focada
+        if(document.visibilityState !== "visible"){
+            // toca musica em loop
+            audio.play();
+            audio.enableLoop();
+            // habilita reset com eventos da notficacao
+            if(notification){
+                notification.onclose = () => reset();
+                notification.onclick = () => reset();
             }
         }
-        if(document.hidden){
-            document.addEventListener("visibilitychange", () => {
-                if(document.visibilityState === "visible"){
-                    audio.stop();
-                    changeTime();
-                }
-            })
-        }
+        // se o usuario estiver com a tela focada
+        if(document.visibilityState === "visible") reset();
+    } 
+    // quando o usuario entrar ou sair da pagina
+    document.onvisibilitychange = () => {
+        // se o usuario estiver com a tela focada e time expire for verdadeiro
+        if(document.visibilityState === "visible" && timeExpire) reset();
     }
+    
     // reset timer
     useEffect(() => {
         if (isWorking) restart(newTimeToTimer(pomodoro.workTime.value), false);

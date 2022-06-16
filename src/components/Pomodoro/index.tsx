@@ -13,7 +13,7 @@ import {IoSettingsOutline} from "react-icons/io5"
 const MINUTES_MULTIPLY = 60;
 
 const DEFAULT_WORK_TIME = 25 * MINUTES_MULTIPLY;
-const DEFAULT_BREAK_TIME = 5;
+const DEFAULT_BREAK_TIME = 5 ;
 
 type PomodoroContextProps = {
     workTime: { value: number, setValue: (newValue: number) => void },
