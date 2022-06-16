@@ -1,50 +1,35 @@
 import {useEffect, useState} from "react";
 
-import { getMinutes, getSeconds, addZeroLeft, convertToNumberFormat } from "../../utils/TimeFormat";
+import { getMinutes, convertToNumberFormat } from "../../utils/TimeFormat";
 
 import * as C from "./style";
 
-const clamp = (value: number, min: number = 0, max: number = 59) => {
-    if(value < min) return addZeroLeft(min);
-    if(value > max) return addZeroLeft(max);
-    return addZeroLeft(value);
-}
-
 type props = {
+    reference: React.MutableRefObject<HTMLDivElement | null>,
     time: number,
     onChange: React.Dispatch<React.SetStateAction<number>>,
-    minSeconds?: number,
-    maxSeconds?: number,
-    minMinutes?: number,
-    maxMinutes?: number,
     id?: string
 }
-const TimeInput = ({time, maxMinutes, maxSeconds, minMinutes, minSeconds, onChange, id}:props) => {
-    const [minutes, setMinutes] = useState<string>(getMinutes(time).toString());
-    const [seconds, setSeconds] = useState<string>(getSeconds(time).toString());
-
-    const updateMinutes = (value: number) => setMinutes(clamp(value, minMinutes, maxMinutes));
-    const updateSeconds = (value: number) => setSeconds(clamp(value, minSeconds, maxSeconds));
-
+const TimeInput = ({time, onChange, reference, id} : props) => {
+    const [minutes, setMinutes] = useState<number>(getMinutes(time));
+    const updateMinutes = (value: string) =>{
+        let min = parseInt(value);
+        if(value === "") min = 0;
+        setMinutes(min);
+    };
     useEffect(() => {
-        setMinutes(getMinutes(time).toString());
-        setSeconds(getSeconds(time).toString());
+        setMinutes(getMinutes(time));
     }, [time])
     // quando mudar algum valor dos inputs vai chamar a função onChange
     useEffect(()=>{
-        onChange(convertToNumberFormat(minutes, seconds));
-    }, [minutes, seconds, onChange])
+        onChange(convertToNumberFormat({minutes: minutes}));
+    }, [minutes, onChange])
 
     return(
-        <C.Time id={id}>
+        <C.Time ref={reference} id={id}>
             <C.Input 
                 value={minutes}
-                onChange={(e)=> updateMinutes(parseInt(e.target.value))}
-            />
-            <span>:</span>
-            <C.Input
-                value={seconds}
-                onChange={(e)=> updateSeconds(parseInt(e.target.value))}
+                onChange={(e)=> updateMinutes(e.target.value)}
             />
         </C.Time>
     )

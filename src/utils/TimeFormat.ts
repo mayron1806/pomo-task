@@ -1,6 +1,8 @@
-const convertToNumberFormat = (minutes: string | number, seconds: string | number): number => {
-    if (typeof(minutes) === "string") minutes = parseInt(minutes);
-    if (typeof(seconds) === "string") seconds = parseInt(seconds);
+type ConvertToMinutesFormatProps = {
+    minutes: number,
+    seconds?: number
+}
+const convertToNumberFormat = ({minutes, seconds = 0}: ConvertToMinutesFormatProps): number => {
     return (minutes * 60) + seconds;
 }
 const convertToMinutesFormat = (value: string | number): string =>{
@@ -10,13 +12,14 @@ const convertToMinutesFormat = (value: string | number): string =>{
     return `${minutes}:${seconds}`;
 }
 const addZeroLeft = (value: string | number) : string => ("00" + value.toString()).slice(-2);
-const getMinutes = (value: number | string) => {
+
+const getMinutes = (value: number) : number => {
     if (typeof(value) === "string") value = parseInt(value); 
-    return addZeroLeft(Math.floor(value / 60));
+    return Math.floor(value / 60);
 }
-const getSeconds = (value: number | string) => {
+const getSeconds = (value: number) : number=> {
     if(typeof(value) === "string") value = parseInt(value); 
-    return addZeroLeft(Math.floor(value % 60));
+    return Math.floor(value % 60);
 }
 export {
     convertToMinutesFormat,

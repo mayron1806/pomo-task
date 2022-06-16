@@ -15,39 +15,49 @@ const MINUTES_MULTIPLY = 60;
 const DEFAULT_WORK_TIME = 25 * MINUTES_MULTIPLY;
 const DEFAULT_BREAK_TIME = 5 * MINUTES_MULTIPLY;
 
-type TimesContextProps = {
+type PomodoroContextProps = {
     workTime: { value: number, setValue: (newValue: number) => void },
-    breakTime: { value: number, setValue: (newValue: number) => void }
+    breakTime: { value: number, setValue: (newValue: number) => void},
+    canPlayAudio: {value: boolean, setValue: (newValue: boolean) => void }
 }
-export const TimesContext = createContext<TimesContextProps>({
+export const PomodoroContext = createContext<PomodoroContextProps>({
     workTime: { value: DEFAULT_WORK_TIME, setValue: ()=>{} },
-    breakTime: { value: DEFAULT_BREAK_TIME, setValue: ()=>{} }
+    breakTime: { value: DEFAULT_BREAK_TIME, setValue: ()=>{} },
+    canPlayAudio: {value: true, setValue: () => {}}
 });
 
 const Pomodoro = memo(() => {
+    // times
     const {
-        state: workTime, 
+        state: workTime,
         setState: setWorkTime
     } = useLocalState<number>("work-time", DEFAULT_WORK_TIME);
-
     const {
-        state: breakTime,
+        state: breakTime, 
         setState: setBreakTime
     } = useLocalState<number>("break-time", DEFAULT_BREAK_TIME);
 
+    // audio
+    const {
+        state: canPlayAudio, 
+        setState: setCanPlayAudio
+    } = useLocalState<boolean>("audio", true);
+
+    // settings
     const [isSettingsActive, setIsSettingsActive] = useState<boolean>(false);
     const enableSettings = () => setIsSettingsActive(true);
-    const desableSettings = () => setIsSettingsActive(false);
+    const disableSettings = () => setIsSettingsActive(false);
 
     return(
-        <TimesContext.Provider value={{
+        <PomodoroContext.Provider value={{
             workTime: { value: workTime, setValue: setWorkTime },
-            breakTime: { value: breakTime, setValue: setBreakTime }
+            breakTime: { value: breakTime, setValue: setBreakTime },
+            canPlayAudio: { value: canPlayAudio, setValue: setCanPlayAudio }
         }}>
             <Modal 
                 title="Configurações do pomodoro" 
-                template={<AjustPomodoroTime close={desableSettings} />}
-                disableModal={desableSettings} 
+                template={ <AjustPomodoroTime close={disableSettings}/> }
+                disableModal={disableSettings} 
                 isActive={isSettingsActive}
             />
             <C.Header>
@@ -57,7 +67,7 @@ const Pomodoro = memo(() => {
             <C.TimerContainer>
                 <Timer />
             </C.TimerContainer>
-        </TimesContext.Provider>
+        </PomodoroContext.Provider>
     )
 })
 export default Pomodoro;

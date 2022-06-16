@@ -57,7 +57,7 @@ const TaskList = () => {
         const taskIndex = allTasks.findIndex(task => task.id === id);
         if(taskIndex === -1) return;
 
-        const new_tasks = allTasks;
+        const new_tasks = [...allTasks];
         if(complete !== undefined) new_tasks[taskIndex].complete = complete;
         if(priority !== undefined) new_tasks[taskIndex].priority = priority;
         setAllTasks(new_tasks);
@@ -66,9 +66,9 @@ const TaskList = () => {
     const deleteTask = (id: string) => {
         const index = allTasks.findIndex(task => task.id === id)
         if(index === -1) return;
-        const tasks = allTasks;
-        tasks.splice(index, 1);
-        setAllTasks(tasks);
+        const new_tasks = [...allTasks];
+        new_tasks.splice(index, 1);
+        setAllTasks(new_tasks);
     }
     // conta as tarefas concluidas
     const complete_task_count = allTasks.filter(task => task.complete).length;

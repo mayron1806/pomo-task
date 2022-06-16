@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, memo } from "react";
 import { useTimer } from "react-timer-hook";
 
 import Button from "../Button";
-import { TimesContext } from "../Pomodoro";
+import { PomodoroContext } from "../Pomodoro";
 
 import * as C from "./style";
 
@@ -18,34 +18,38 @@ import wave from "../../assets/waves/wave.svg";
 import wave2 from "../../assets/waves/wave2.svg";
 import wave3 from "../../assets/waves/wave3.svg";
 
+import { playAudioInLoop } from "../../utils/Audio";
+
+import alarm from "../../assets/sounds/alarm.wav";
+
 const newTimeToTimer = (time: number) => {
     const new_time = new Date();
     new_time.setSeconds(new_time.getSeconds() + time);
     return new_time;
 }
 const sendTimerNotification = (is_working : boolean) => {
-    if(canNotify()){
-        let title: string = "";
-        const options: NotificationOptions = {};
-        if (is_working){
-            title = "Hora de descansar";
-            options.body = getRandomItem(notificationMessages["stop-work"]);
-            options.icon = break_icon;
-        } else {
-            title = "Hora de trabalhar";
-            options.body = getRandomItem(notificationMessages["go-to-work"]);
-            options.icon = work_icon;
-        }
-        new Notification(title, options);
+    let title: string = "";
+    const options: NotificationOptions = {};
+    if (is_working){
+        title = "Hora de descansar";
+        options.body = getRandomItem(notificationMessages["stop-work"]);
+        options.icon = break_icon;
+    } else {
+        title = "Hora de trabalhar";
+        options.body = getRandomItem(notificationMessages["go-to-work"]);
+        options.icon = work_icon;
     }
+    return new Notification(title, options);
 }
+
 // procentagem do tempo decorrido 
 type PercentTimeProps = { max_time: number, current_time: number }
 const percentTimeElapsed = ({max_time, current_time}: PercentTimeProps)=> current_time * 100 / max_time;
 
+//component
 const Timer = memo(() => {
     // timer
-    const times = useContext(TimesContext);
+    const pomodoro = useContext(PomodoroContext);
     const [isWorking, setIsWorking] = useState<boolean>(true);
     const {
         pause,
@@ -55,26 +59,51 @@ const Timer = memo(() => {
         seconds,
         isRunning
     } = useTimer({
-        expiryTimestamp: newTimeToTimer(times.workTime.value),
+        expiryTimestamp: newTimeToTimer(pomodoro.workTime.value),
         autoStart: false,
-        onExpire: () => sendTimerNotification(isWorking)
+        onExpire: () => {
+            expire();
+            changeTime();
+        }
     });
+    const expire = () => {
+        // notificação 
+        // se pode notificar vai enviar a notificação e atribuir a variavel
+        let notification = canNotify() && sendTimerNotification(isWorking);
+        
+        // audio
+        if(!pomodoro.canPlayAudio.value) return;
+        const audio = playAudioInLoop(alarm);
+        if(notification){
+            notification.onclose = () => {audio.pause()};
+            notification.onclick = () => {audio.pause()};
+        }
+        if(document.hidden){
+            document.addEventListener("visibilitychange", () => {
+                if(document.visibilityState === "visible"){
+                    audio.pause();
+                }
+            })
+        }else{
+            audio.pause();
+        }
+    }
 
     // reset timer
     useEffect(() => {
-        if (isWorking) restart(newTimeToTimer(times.workTime.value), false);
-        if(!isWorking) restart(newTimeToTimer(times.breakTime.value), false);
-    }, [times, isWorking])
+        if (isWorking) restart(newTimeToTimer(pomodoro.workTime.value), false);
+        if(!isWorking) restart(newTimeToTimer(pomodoro.breakTime.value), false);
+    }, [pomodoro, isWorking])
     
     // muda para tempo de trabalho ou descanso
     const changeTime = () => {
         if (!isWorking) {
             setIsWorking(true);
-            restart(newTimeToTimer(times.workTime.value), false);
+            restart(newTimeToTimer(pomodoro.workTime.value), false);
         } 
         if (isWorking) {
             setIsWorking(false);
-            restart(newTimeToTimer(times.breakTime.value), false);
+            restart(newTimeToTimer(pomodoro.breakTime.value), false);
         }
     }
     return (
@@ -84,8 +113,8 @@ const Timer = memo(() => {
                 <Waves 
                     animateWaves={isRunning} 
                     percentComplete={percentTimeElapsed({
-                        max_time: isWorking ? times.workTime.value : times.breakTime.value,
-                        current_time: convertToNumberFormat(minutes, seconds)
+                        max_time: isWorking ? pomodoro.workTime.value : pomodoro.breakTime.value,
+                        current_time: convertToNumberFormat({minutes: minutes, seconds: seconds})
                     })}
                 />
             </C.Timer>
@@ -93,12 +122,13 @@ const Timer = memo(() => {
                 { isWorking ? "Hora de trabalhar" : "Merecido descanso" }
             </C.Title>
             <C.ButtonsContainer>
-                {
-                    isRunning &&
-                        <Button action={pause} text="Pausar" filled={true} />
-                    ||
-                        <Button action={resume} text="Iniciar" filled={true} />
-                }
+                <Button 
+                    action={isRunning ? pause : resume} 
+                    text={isRunning ? "Pausar" : "Iniciar"} 
+                    active={isRunning}
+                    playSound={pomodoro.canPlayAudio.value}
+                    filled={true} 
+                />
                 <Button
                     action={changeTime}
                     text={isWorking ? "Descansar" : "Trabalhar"}

@@ -13,13 +13,11 @@ import lightTheme from './themes/light';
 import { useLocalState } from './hooks/useLocalState';
 import { canNotify, getNotificationPermision } from './utils/Notification';
 import { useEffect } from 'react';
-
 function App() {
   const {
     state: currentTheme, 
     setState: setCurrentTheme
   } = useLocalState<Theme>("theme", lightTheme);
-
   // se nao pode enviar noficação vai pedir permissão quando renderizar o app
   useEffect(()=>{ !canNotify() && getNotificationPermision()}, [])  
 

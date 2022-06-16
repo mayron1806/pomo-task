@@ -1,25 +1,25 @@
-import styled from "styled-components";
+import * as C from "./style";
+import sound from "../../assets/sounds/click.mp3";
+import { playAudio } from "../../utils/Audio";
 
-const Container = styled.button<{filled: boolean}>`
-    width: 100%;
-    min-width: fit-content;
-    font-size: 2.5rem;
-    font-weight: 600;
-    padding: 1rem 2rem;
-    background-color: ${props => props.filled ? "var(--purple)" : "transparent"};
-    color: ${props => props.filled ? "var(--white)" : "var(--purple)"};
-    border-radius: 5rem;
-    border: 3px solid var(--purple);
-    cursor: pointer;
-    transition: 0.3s;
-    &:hover{
-        filter: brightness(1.2);
+type props = { 
+    text: string, 
+    action: () => void, 
+    active?: boolean, 
+    playSound?: boolean,
+    filled?: boolean 
+}
+const Button = ({ text, action, active = false, playSound = false }: props) => {
+    const click = () => {
+        if(playSound){
+            playAudio(sound);
+        }
+        action();
     }
-`;
-
-type props = { text: string, action: () => void, filled?: boolean }
-
-const Button = ({ text, action, filled = false }: props) => {
-    return <Container filled={filled} onClick={() => action()}>{text}</Container>
+    return (
+        <C.Container active={active} onClick={() => click()}>
+            <div className="front">{text}</div>
+        </C.Container>
+    )
 }
 export default Button;

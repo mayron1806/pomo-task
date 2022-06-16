@@ -7,7 +7,7 @@ import * as C from "./style";
 
 import { v4 as getID } from "uuid";
 
-import Label from "../Label/intex";
+import Label from "../Label";
 import ErrorMessage from "../ErrorMessage";
 import SendButton from "../SendButton";
 

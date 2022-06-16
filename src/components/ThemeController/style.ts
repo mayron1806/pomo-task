@@ -53,6 +53,7 @@ export const Button = styled.button`
     position: relative;
     transition: 0.5s;
     padding: 1rem;
+    cursor: pointer;
 `;
 export const TextButton = styled.p`
     color: ${props => props.theme.text_color};
