@@ -18,9 +18,8 @@ import wave from "../../assets/waves/wave.svg";
 import wave2 from "../../assets/waves/wave2.svg";
 import wave3 from "../../assets/waves/wave3.svg";
 
-import { playAudioInLoop } from "../../utils/Audio";
-
-import alarm from "../../assets/sounds/alarm.wav";
+import alarm from "../../assets/sounds/alarm.mp3";
+import { useAudio } from "../../hooks/useAudio";
 
 const newTimeToTimer = (time: number) => {
     const new_time = new Date();
@@ -48,6 +47,7 @@ const percentTimeElapsed = ({max_time, current_time}: PercentTimeProps)=> curren
 
 //component
 const Timer = memo(() => {
+    const audio = useAudio(alarm);
     // timer
     const pomodoro = useContext(PomodoroContext);
     const [isWorking, setIsWorking] = useState<boolean>(true);
@@ -61,11 +61,10 @@ const Timer = memo(() => {
     } = useTimer({
         expiryTimestamp: newTimeToTimer(pomodoro.workTime.value),
         autoStart: false,
-        onExpire: () => {
-            expire();
-            changeTime();
-        }
+        onExpire: () => expire()
     });
+  
+
     const expire = () => {
         // notificação 
         // se pode notificar vai enviar a notificação e atribuir a variavel
@@ -73,22 +72,27 @@ const Timer = memo(() => {
         
         // audio
         if(!pomodoro.canPlayAudio.value) return;
-        const audio = playAudioInLoop(alarm);
+        audio.play();
+        audio.enableLoop();
         if(notification){
-            notification.onclose = () => {audio.pause()};
-            notification.onclick = () => {audio.pause()};
+            notification.onclose = () => {
+                audio.stop();
+                changeTime();
+            }
+            notification.onclick = () => {
+                audio.stop();
+                changeTime();
+            }
         }
         if(document.hidden){
             document.addEventListener("visibilitychange", () => {
                 if(document.visibilityState === "visible"){
-                    audio.pause();
+                    audio.stop();
+                    changeTime();
                 }
             })
-        }else{
-            audio.pause();
         }
     }
-
     // reset timer
     useEffect(() => {
         if (isWorking) restart(newTimeToTimer(pomodoro.workTime.value), false);

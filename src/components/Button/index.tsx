@@ -1,6 +1,6 @@
 import * as C from "./style";
 import sound from "../../assets/sounds/click.mp3";
-import { playAudio } from "../../utils/Audio";
+import { useAudio } from "../../hooks/useAudio";
 
 type props = { 
     text: string, 
@@ -10,9 +10,11 @@ type props = {
     filled?: boolean 
 }
 const Button = ({ text, action, active = false, playSound = false }: props) => {
+    const audio = useAudio(sound);
     const click = () => {
         if(playSound){
-            playAudio(sound);
+            audio.setSound(sound);
+            audio.play();
         }
         action();
     }

@@ -6,7 +6,6 @@ function getStorageValue<T>(key: string, defaultValue: T) {
     
     let initial = undefined;
     if(saved) initial = JSON.parse(saved);
-    console.log(key + ":" + initial);
     if(initial !== undefined) return initial;
     return defaultValue;
   }
