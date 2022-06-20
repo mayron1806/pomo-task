@@ -23,17 +23,15 @@ function App() {
 
   return (
     <ThemeProvider theme={currentTheme.colors}>
-       <C.Main>
-        <Container className='tasks'>
-          <TaskList />
-        </Container>
-        <Container className='wellcome'>
-          <Wellcome />
-        </Container>
-        <Container className='pomodoro'>
+      <C.Main>
+        <C.Content> 
+          <Container className='wellcome'>
+            <Wellcome />
+          </Container>
+          <ThemeController theme={currentTheme} setTheme={setCurrentTheme}/>
           <Pomodoro />
-        </Container>
-        <ThemeController theme={currentTheme} setTheme={setCurrentTheme}/>
+          <TaskList />
+        </C.Content>
       </C.Main>
     </ThemeProvider>
    

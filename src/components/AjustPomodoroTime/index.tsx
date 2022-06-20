@@ -4,13 +4,14 @@ import {GoMute, GoUnmute} from "react-icons/go";
 import Label from "../Label";
 import SendButton from "../SendButton";
 import TimeInput from "../TimeInput";
-import ErrorMessage from "../ErrorMessage";
+import ErrorMessage, { ErrorType } from "../ErrorMessage";
 
 import { PomodoroContext } from "../Pomodoro";
 
 import * as C from "./style";
 
 import { getMinutes } from "../../utils/TimeFormat";
+import { get } from "https";
 
 // min times value
 const WORK_TIME = {
@@ -19,10 +20,14 @@ const WORK_TIME = {
 const BREAK_TIME = {
     min: 1
 }
-
+type Error = {
+    message: string,
+    type?: ErrorType
+}
 type props = {
     close: () => void
 }
+
 const AjustPomodoroTime = ({ close }: props) => {
     const pomodoro = useContext(PomodoroContext);
 
@@ -33,18 +38,20 @@ const AjustPomodoroTime = ({ close }: props) => {
     const workTimeInputRef = useRef<HTMLDivElement | null>(null);
     const breakTimeInputRef = useRef<HTMLDivElement | null>(null);
 
-    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [error, setError] = useState<Error>({type: ErrorType.ERROR, message: ""});
 
     const saveTimes = (e: FormEvent) => {
         e.preventDefault();
         // valida os dados  
         if(getMinutes(settingsWorkTime) < WORK_TIME.min){
-            setErrorMessage(`O tempo de trabalho precisa ser de no minimo ${WORK_TIME.min} minutos`);
+            const message = `O tempo de trabalho precisa ser de no minimo ${WORK_TIME.min} minutos`;
+            setError({type: ErrorType.ERROR, message: message});
             workTimeInputRef.current?.classList.add("error");
             return;
         }
         if(getMinutes(settingsBreakTime) < BREAK_TIME.min){
-            setErrorMessage(`O tempo de descanso precisa ser de no minimo ${BREAK_TIME.min} minutos`);
+            const message = `O tempo de descanso precisa ser de no minimo ${BREAK_TIME.min} minutos`;
+            setError({type: ErrorType.ERROR, message: message});
             breakTimeInputRef.current?.classList.add("error");
             return;
         }
@@ -57,16 +64,28 @@ const AjustPomodoroTime = ({ close }: props) => {
     useEffect(()=>{
         if(settingsWorkTime > WORK_TIME.min){
             workTimeInputRef?.current?.classList.remove("error");
-            setErrorMessage("");
+            setError({type: undefined, message: ""});
         }
         if(settingsBreakTime > BREAK_TIME.min){
             breakTimeInputRef?.current?.classList.remove("error");
-            setErrorMessage("");
+            setError({type: undefined, message: ""});
+        }
+        // se o tempo de descanso for maior que a metade do tempo de trabalho
+        if(getMinutes(settingsBreakTime) * 2 > getMinutes(settingsWorkTime)){
+            const message = `É recomendado que o tempo de descanso tenha no maximo metado do tempo de trabalho.`
+            setError({type: ErrorType.WARNING, message: message});
+            breakTimeInputRef.current?.classList.add("warning");
+            return;
+        }
+        if(getMinutes(settingsBreakTime) * 2 < getMinutes(settingsWorkTime)){
+            setError({type: undefined, message: ""});
+            breakTimeInputRef.current?.classList.remove("warning");
+            return;
         }
     }, [settingsWorkTime, settingsBreakTime])
 
     return(
-        <form onSubmit={(e)=> saveTimes(e)}>
+        <C.Form onSubmit={(e)=> saveTimes(e)}>
             <C.TimeBlock>
                 <Label htmlFor="work">Tempo de trabalho:(min)</Label>
                 <TimeInput 
@@ -96,9 +115,13 @@ const AjustPomodoroTime = ({ close }: props) => {
                     }
                 </C.Audio>
             </C.TimeBlock>
-            <ErrorMessage>{errorMessage}</ErrorMessage>
+            {
+                error.type !== undefined &&
+                <ErrorMessage type={error.type}>{error.message}</ErrorMessage>
+            }
+            
             <SendButton value="Salvar"/>
-        </form>
+        </C.Form>
     )
 }
 export default AjustPomodoroTime;

@@ -29,7 +29,10 @@ export const Time = styled.div`
     //error animation
     &.error{
         animation: ${vibrateAnim} 0.3s linear 1;
-        border-color: var(--red);
+        border-color: var(--error);
+    }
+    &.warning{
+        border-color: var(--warning);
     }
 `;
 /* INPUT ------------------------------------------------------------------------------------- */

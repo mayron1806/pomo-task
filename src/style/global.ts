@@ -20,6 +20,9 @@ const Global = createGlobalStyle`
         --purple: #9C44DC;
         --light-purple: #BC8AE1;
         --shadow: rgba(0, 0, 0, 0.3);
+
+        --error: #FA0A0A;
+        --warning: #FFB818;
         
         font-size: 62.5%;
         @media (max-width: 1200px){

@@ -100,7 +100,7 @@ const TaskList = () => {
     };
     
     return(
-        <>
+        <div className="tasks">
             <Modal
                 title={modalTitle}
                 template={modalTemplate}
@@ -158,7 +158,7 @@ const TaskList = () => {
                     </tbody>
                 </table>
             </C.TableContainer>
-        </>
+        </div>
     )
 }
 export default TaskList;

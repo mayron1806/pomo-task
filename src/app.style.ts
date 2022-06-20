@@ -1,19 +1,27 @@
 import styled from "styled-components";
-
 export const Main = styled.div`
     background-color: ${props => props.theme.main};
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+`;
+export const Content = styled.div`
     padding: 2rem;
     display: grid;
-    min-height: 100vh;
-    grid-template-columns: 35vw 1fr auto;
-    grid-template-rows: 30vh 1fr;
+    height: 100%;
+    max-width: 1000px;
+    grid-template-columns: 90% 1fr;
+    grid-template-rows: 30vh 1fr 1fr;
     grid-template-areas: 
-    "tasks wellcome theme"
-    "tasks pomodoro pomodoro";
-    grid-gap: 2rem; 
+    "wellcome theme"
+    "pomodoro pomodoro"
+    "tasks tasks";
+    grid-gap: 5rem 2rem; 
     transition: 0.5s;
     .tasks{
         grid-area: tasks;
+        border-top: 1px solid var(--gray);
+        padding-top: 1rem;
     }
     .wellcome{
         grid-area: wellcome;
@@ -23,26 +31,17 @@ export const Main = styled.div`
     }
     .pomodoro{
         grid-area: pomodoro;
+        border-top: 1px solid var(--gray);
+        padding-top: 1rem;
     }
-    @media (max-width: 950px){
-        grid-template-areas: 
-        "pomodoro wellcome theme"
-        "pomodoro tasks tasks";
-    }
-    @media (max-width: 700px){
-        grid-template-areas: 
-        "wellcome wellcome theme"
-        "pomodoro tasks tasks";
-        grid-template-columns: 40vw 1fr auto;
-        grid-template-rows: 25vh 1fr;
-    }
+   
     @media (max-width: 600px){
-        grid-template-columns: 1fr 10vw;
-        grid-template-rows: 30vh 1fr 1fr auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: 30vh auto 1fr 1fr;
         grid-template-areas: 
-        "wellcome wellcome"
-        "pomodoro pomodoro"
-        "tasks tasks"
-        "theme theme";
+        "wellcome"
+        "theme"
+        "pomodoro"
+        "tasks";
     }
 `;

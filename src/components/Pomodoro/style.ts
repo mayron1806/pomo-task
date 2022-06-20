@@ -13,4 +13,5 @@ export const Header = styled.header`
         color: ${props => props.theme.text_color};
         cursor: pointer;
     }
+    margin-bottom: 2rem;
 `;

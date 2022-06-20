@@ -7,6 +7,7 @@ export const Header = styled.div`
         cursor: pointer;
         color: ${props => props.theme.text_color};
     }
+    margin-bottom: 2rem;
 `;
 /* BLOCK------------------------------------------------------------------------------------------*/
 export const BlocksContainer = styled.div`

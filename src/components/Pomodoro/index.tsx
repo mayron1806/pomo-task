@@ -49,25 +49,27 @@ const Pomodoro = memo(() => {
     const disableSettings = () => setIsSettingsActive(false);
 
     return(
-        <PomodoroContext.Provider value={{
-            workTime: { value: workTime, setValue: setWorkTime },
-            breakTime: { value: breakTime, setValue: setBreakTime },
-            canPlayAudio: { value: canPlayAudio, setValue: setCanPlayAudio }
-        }}>
-            <Modal 
-                title="Configurações do pomodoro" 
-                template={ <AjustPomodoroTime close={disableSettings}/> }
-                disableModal={disableSettings} 
-                isActive={isSettingsActive}
-            />
-            <C.Header>
-                <Title title="Pomodoro"/>
-                <IoSettingsOutline className="settings" size={25} onClick={()=> enableSettings()}/>
-            </C.Header>
-            <C.TimerContainer>
-                <Timer />
-            </C.TimerContainer>
-        </PomodoroContext.Provider>
+        <div className="pomodoro">
+            <PomodoroContext.Provider value={{
+                workTime: { value: workTime, setValue: setWorkTime },
+                breakTime: { value: breakTime, setValue: setBreakTime },
+                canPlayAudio: { value: canPlayAudio, setValue: setCanPlayAudio }
+            }}>
+                <Modal 
+                    title="Configurações do pomodoro" 
+                    template={ <AjustPomodoroTime close={disableSettings}/> }
+                    disableModal={disableSettings} 
+                    isActive={isSettingsActive}
+                />
+                <C.Header>
+                    <Title title="Pomodoro"/>
+                    <IoSettingsOutline className="settings" size={25} onClick={()=> enableSettings()}/>
+                </C.Header>
+                <C.TimerContainer>
+                    <Timer />
+                </C.TimerContainer>
+            </PomodoroContext.Provider>
+        </div>
     )
 })
 export default Pomodoro;
