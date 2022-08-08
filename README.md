@@ -26,3 +26,8 @@ Se quiser testar o projeto na sua maquina local é so seguir os comandos abaixo.
 5° Acesse a url `http://localhost:3000` no navegador. <br>
 
 (Obs.: é necessario ter o node instalado no seu computador.)
+
+## Versão desktop
+Este projeto também possui uma versão para windows, que pode ser usada offline, caso queira usar o app no seu pc é so acessar o link abaixo. <br>
+Arquivos do app no Google drive (Windows): https://drive.google.com/file/d/14fbAfvqqV2tsd6fcjR5473PXPSzODAJL/view?usp=sharing <br>
+Repositório: https://github.com/mayron1806/Taskpomo-desktop
